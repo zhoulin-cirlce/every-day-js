@@ -1,0 +1,16 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+    //题目：删除数组 arr 第一个元素。不要直接修改数组 arr，结果返回新的数组 			
+    function curtail(arr) {
+				arry=arr.slice(0);
+			    arry.shift();
+			    return arry;
+			}
+			console.log("curtail=",curtail([1,2,3,4]))
+		</script>
+	</body>
+</html>
