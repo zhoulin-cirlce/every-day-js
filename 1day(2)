@@ -1,0 +1,18 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 题目：计算给定数组 arr 中所有元素的总和  
+			function sum(arr) {
+			    var sum=0;
+			 	for(var i=0;i<arr.length;i++){
+			    	sum+=arr[i];
+			 	}
+			    return sum
+			}
+			console.log("sum=",sum([1,2,3,4]))
+		</script>
+	</body>
+</html>
