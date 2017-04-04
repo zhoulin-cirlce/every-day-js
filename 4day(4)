@@ -1,0 +1,19 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+    //题目：数组的合并，不能要原有数组上修改			
+    function concat(arr1,arr2) {
+				var arry=arr1.slice(0);
+				for(var i=0;i<arr2.length;i++){
+					arry.push(arr2[i]);
+				}
+			    
+			    return arry;
+			}
+			console.log("concat=",concat([1,2,3,4],['a','b','c']))
+		</script>
+	</body>
+</html>
