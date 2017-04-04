@@ -1,0 +1,18 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+			function indexOf(arr, item) {
+				for(var i=0;i<arr.length;i++){
+			        if(arr[i]==item){
+			            return i;
+			        }
+			    }
+			    return -1;
+			}
+			console.log("index=",indexOf([ 1, 2, 3, 4 ], 3))
+		</script>
+	</body>
+</html>
