@@ -1,0 +1,16 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+     //题目：在数组 arr 的 index 处添加元素 item。不要直接修改数组 arr，结果返回新的数组 			
+    function insert(arr, item, index) {
+				var arry=arr.slice(0);
+			    arry.splice(index,0,item);
+			    return arry;
+			}
+			console.log("insert=",insert([1,2,3,4],'circle',2))
+		</script>
+	</body>
+</html>
