@@ -1,0 +1,21 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 题目：在数组 arr 末尾添加元素 item。不要直接修改数组 arr，结果返回新的数组  
+			function append(arr, item) {
+				//数据的赋值是指向引用，会改变源。所以使用克隆
+				Array.prototype.clone=function(){
+					return this.slice(0)
+				}
+				var arry=arr.clone();
+				arry.push(item);
+				console.log(arr,'arry=',arry)
+				return arry
+			}
+			console.log("append=",append([1,2,3,4],10))
+		</script>
+	</body>
+</html>

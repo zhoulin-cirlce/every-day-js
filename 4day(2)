@@ -1,0 +1,16 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+    //题目：在数组 arr 开头添加元素 item。不要直接修改数组 arr，结果返回新的数组 			
+    function prepend(arr, item) {
+				var arry=arr.slice(0);
+			    arry.unshift(item);
+			    return arry;
+			}
+			console.log("prepend=",prepend([1,2,3,4],10))
+		</script>
+	</body>
+</html>
