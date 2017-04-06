@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    //题目：找出数组 arr 中重复出现过的元素 
+        function duplicates(arr) {
+            var arry=[];
+            for(var i=0;i<arr.length;i++){
+                for(var j=i+1;j<arr.length;j++){
+                    if(arr[i]==arr[j]){
+                        arry.push(arr[j]);
+                        arr.splice(i,1);
+                        arr.splice(j,1);
+                    }
+                }
+            }
+            return arry
+        }
+        console.log('duplicates==',duplicates([1, 2, 4,4,4, 4, 3, 3, 1, 5, 3]).sort())
+    </script>
+</body>
+</html>
