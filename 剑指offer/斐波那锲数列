@@ -1,0 +1,28 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+    //题目：大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项。n<=39		
+	//注：斐波那锲数列：即fn(n)=fn(n-1)+fn(n-2); 此题求的第n项其实就是fn(n-1)的结果
+            
+			function Fibonacci(n){
+				var m=0;;
+				if(n>0){m=n-1;}
+				if(n==1){m=1;}
+				if(m<3){
+					return m;
+				}
+				var i=2,a=1,b=2;
+				while(i++<m){
+					var t=b;
+					b=a+b;
+					a=t;
+				}
+				return b;
+			}
+			
+		</script>
+	</body>
+</html>

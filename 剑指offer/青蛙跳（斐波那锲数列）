@@ -1,0 +1,31 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+    //题目：一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法。		
+	//注：此题考的是斐波那锲数列：即fn(n)=fn(n-1)+fn(n-2); 青蛙每跳第n阶都有(n-1)+(n-2)种跳法
+            
+			//递归解法：会超时
+			function jumpFloor(num)
+				if(num<3){return num;}
+				return fib(num-1)+fib(num-2);
+			}
+
+			//循环解法：提交通过   思路：青蛙跳法如同一个二叉树，左子树=父节点的右边兄弟节点
+			function jumpFloor(number){
+				if(number<3){
+					return number;
+				}
+				var i=2,b=2,a=1;
+				while(i++<number){
+					var t=b;
+					b=a+b;
+					a=t;
+				}
+				return b;
+			}
+		</script>
+	</body>
+</html>
