@@ -1,0 +1,29 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+		function reg(){
+			//1、求非负整数	解：以数字开始，至少1个或多个，以数字结尾
+				var str1='20';
+				str1.match(/^\d+$/gi)
+				
+
+			//2、匹配正整数：  解：以数字开始不包括0,至少1个或多个，以数字结尾
+				var str2='1';
+				str2.match(/^[1-9]+$/gi);
+			//3、非正整数： 解：负数和0
+				var str3='-9';
+				str3.match(/(^-\d+)|^0/gi);
+			//4、负整数：	
+				var str4='-9';
+				str4.match(/^-\d+/gi);
+
+			//5、有数字、26个英文字母组成的字符串：
+				var str5='59op';
+				var str5.match(/^[a-z0-9A-Z]+$/gi);
+		}();	
+		</script>
+	</body>
+</html>
