@@ -1,0 +1,18 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 题目：为数组 arr 中的每个元素求二次方。不要直接修改数组 arr，结果返回新的数组
+			function square(arr) {
+			    var result=arr.map(function(key){
+					return Math.pow(key,2);
+				})
+			    return result;
+			}
+			
+			
+		</script>
+	</body>
+</html>

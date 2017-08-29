@@ -13,6 +13,14 @@
 			    return sum
 			}
 			console.log("sum=",sum([1,2,3,4]))
+
+			//用reduce并归，参数1：函数（上一次结果，当前项），参数2：并归叠加项
+			function _reduce(arr){
+				s=arr.reduce(function(val1,val2){
+					return val1+val2;
+				},0);
+				return s;
+			}
 		</script>
 	</body>
 </html>
