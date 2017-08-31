@@ -1,0 +1,19 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+		//题目：new一个对象时，new干了些什么，写个方法实现吧！
+		function _new(constructor,params){
+			var args=[].slice.apply(arguments);		//将参数转成数组， 点：arguments类似数组,Array-like对象
+			var constructor=args.shfit();	//构造函数
+			var context=Object.create(constructor.prototype); //1.创建一个空对象2.空对象继承构造函数的原型 
+			var result=constructor.apply(context,args); //3.将this指向实例对象 4.传递相应属性与方法，执行内部方法
+			return (typeof result === 'object' && result != null) ? result : context;
+		}		
+
+		 
+		</script>
+	</body>
+</html>
