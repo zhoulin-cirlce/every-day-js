@@ -1,0 +1,22 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+		//题目：给定一个构造函数 constructor，请完成 alterObjects 方法，
+		//将 constructor 的所有实例的 greeting 属性指向给定的 greet变量。
+		//输入:var C = function(name) {
+		// 			this.name = name;
+		//		    return this;
+		// 		}
+		// 	var obj1 = new C('Rebecca'); 
+		//  alterObjects(C, 'What\'s up'); 
+		//  obj1.greeting;
+		function alterObjects(constructor,greet){
+			constructor.prototype.greeting=greet;	//实例会根据原型链找到构造函数的原型
+			return ;
+		}		
+		</script>
+	</body>
+</html>

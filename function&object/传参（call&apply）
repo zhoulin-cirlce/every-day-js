@@ -1,0 +1,32 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+		//1.题目： 将数组 arr 中的元素作为调用函数 fn 的参数
+		//输入：function (greeting, name, punctuation) {
+		//			return greeting + ', ' + name + (punctuation || '!');
+		//		}, ['Hello', 'Ellie', '!']
+		//输出：Hello, Ellie!
+		function argsAsArray(fn, arr) {
+			return fn.apply(this,arr);
+		}
+
+
+
+		//解：调用apply函数的参数以数组的形式传递。如果是call则参数需逐个传递。
+
+
+
+		//2.题目：将函数 fn 的执行上下文改为 obj 对象
+		//输入：function () {
+		//	return this.greeting + ', ' + this.name + '!!!';
+		//	}, {greeting: 'Hello', name: 'Rebecca'}
+		//输出：Hello, Rebecca!!!
+		function speak(fn,obj){
+			return fn.call(obj,obj);
+		}
+		</script>
+	</body>
+</html>
