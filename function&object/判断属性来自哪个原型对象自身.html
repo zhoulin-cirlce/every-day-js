@@ -1,0 +1,18 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+		//题目： 原型链是从自身到自身原型对象一层一层往上找，一个属性'key'到底来自于原型链上的哪一个对象呢？
+		//注：对象的原型对象指向构造函数的原型
+		function getDefiningObject(obj,key){
+			while(obj && !{}.hasOwnProperty.call(obj,key)){ //是否在当前原型对象有此属性
+				obj=obj.getPrototypeOf(obj);  //否则返回上级对象
+			}
+			return obj;
+		}	
+
+		</script>
+	</body>
+</html>
