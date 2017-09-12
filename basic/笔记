@@ -1,0 +1,130 @@
+mongodb:
+进入meteor的mogodb环境：meteor mongo
+update方法：
+1.直接update数据，复盖式更新整条数据
+2.{$set:{field:value}}，将field字段的值设置为value
+3.{$inc:{field:value}}，对一个数字字段field，叠加值value
+4.{$unset:{field:1}},删除字段field
+5.{$push:{field:value}}将value追加到field字段中，如果field字段不存在，会自动创建一个array类型 
+6.{$pushAll:{field:value_array}}将多到值追加到field字段中，传入一个数组
+7.{$addToSet:{field:value}} 如果field中不存在value这个值，增加一个值到数组内
+8.{$pop:{field:1/-1}} 删除field数组内的一个值，1是最后一个，-1是第一个值
+9.{$pull:{field:value}} 删除field字段中一个等于value的值
+10.{$pullAll:{field:value_array}}删除field字段中的多个值（与value_array相等）
+11.$代表找到结果的自身，但只应用于第一条数据
+8-14
+
+----meteor发布订阅一个表，参考labelManage.js
+1.在publications--> labelManage.js发布，可以监听新增，变化，删除事件
+2.package---> rocketchat-lib---> server---> models-->LabelTab.coffee写入一些改变数据（集合）的方法
+3.在客户端通过Meteor.subscribe('labelGroups',companyId)来订阅
+4.注册集合与别名（RocketChat.models.Labels）：package---> rocketchat-ui---> lib---> collections.coffee  例 new Meteor.Collection('labelGroupsList')
+接口：
+机器人发消息：sendMessageByChatbot()
+创建点对点聊天：createDirectMessageByChatbot()
+暴露接口(活跃度)：
+packages/meteor-message-api
+异步改同步，简单又好用 fiber包
+绑定Meteor执行环境，例 Meteor.bindEnvironment(()=> //dosomething
+	Meteor.call('Allusers',function(err,res){ return res;});
+)
+
+
+
+
+
+小知识点：
+堆栈溢出：不顾堆栈内存中分配的局部数据块大小，在数据块中写入了过多的数据，导致数据超出，覆盖了别的数据，经常在递归中发生。
+内存溢出：是指在申请内存时，没有足够的空间提供其使用。比如在c++中，申请一个int类型的内存空间，传入一个long类数值，不够存储，内存溢出。
+内存泄漏：用动态存储分配函数内存空间，在使用完毕后没有得到释放，一直占据内存空间，直到程序结束。
+内存泄漏发生表怳：1.setTimeout()第一个参数为字符串而不是函数时 2.闭包，控制台日志，相互循环；
+防止内存泄漏：
+	1、不要动态绑定事件；(可能会循环)
+	2、不要在动态添加，或者会被动态移除的dom上绑事件，用事件冒泡在父容器监听事件；(可能会让事件循环绑定或触发)
+	3、如果要违反上面的原则，必须提供destroy方法，保证移除dom后事件也被移除，这点可以参考Backbone的源代码，做的比较好；
+	4、单例化，少创建dom，少绑事件。
+
+常见http协议码
+200：请求成功
+201：请求成功并且服务器创建了新的资源
+302：服务器当前从不同位置的网页响应请求，但请求者应继续使用原有位置来响应之后的请求。
+304：上次请求后，网页未被修改过，服务器返回此响应时，不会返回网页的内容。
+400：服务器不理解请求的语法。
+404：请求资源不存在。
+500：内部服务器错误。
+
+《大话数据结构》
+渐近增长越快的算法越不好
+线性表：
+顺度存储三属性：存储空间起始(数组data），线性表最大存储容量（array.length尽量不变）,线性表长度（可变）
+线性长度应小于数组（存储）长度
+地址计算 LOC(ai)=LOC(a1)+(i-1)*c  //1.a后的数为下标，c是单个占用的存储单元
+				//2.每个单元的存储时间相等，时间复杂度计为O(1),叫随机存储结构。
+
+
+
+
+面向对象编程
+构造函数名首字母大写
+function Fubar(){
+  this.name='circle',	//构造函数的this,指向所有实例，这里指向v
+  this.age=12
+}
+var v=new Fubar();
+v.name	//'circle'
+
+new关建字都做了什么：
+1.创建一个空对象，作为将要返回的对象实例
+2.将这个空对象的原型，指向构造函数的prototype属性
+3.将这个空对象赋值给函数内部的this关键字
+4.开始执行构造函数内部的代码
+注：new命令总是返回一个对象，要么是实例，要么是return后面的对象，或空对象
+在构造函数里使用 new.target 表示this(实例)是否是来自new关键字，是的话返回构造函数
+
+如果构造函数返回的是一个新对象n，当实例化构造函数时，this返回为对象n
+对普通函数使用new关键字，返回一个空对象
+
+var person2=Object.create(person1);  //person2继承了person1的属性与方法
+查询person对象的key:
+  Object.keys(person);	//查询自身可枚举的属性
+  for key in person    //会查自身及原型链上查找可枚举的属性
+  Object.getOwnPropertyNames()  //查找自身的所有属性，不包含继承属性名
+判断是否是自身属性:
+1. Object.hasOwnProperty('name')   //而非来自原型链和继承
+2.'length' in Date	//in 只要存在就返回true，不管是否来自继承
+3.for key in person   //自身+继承+可枚举
+
+查找对象属性举例：
+var o1={p1:123}
+var o2=Object.create(o1,{p2:{value:345,enumerable:true},p3:{value:'hello'}});  //create的第二个参数：给o2自身增加属性，值要以对象形式声明，可写，可枚举，可配置要显示标明，否则默认为false
+Object.getOwnPropertyNames(o2);  //p2,p3   自身属性
+o2.hasOwnPropertyNames('p1');  //false  验证是否是自身的属性
+Object.keys(o2);    //p2   自身可枚举属性
+for key in o2	    //p1,p2  //自身及原型链上可枚举属性
+
+原型对象 prototype:
+1.实例的原型对象指向构造函数的原型
+f.color先到实例f自身找color属性，再到构造函数内部找，再到原型对象上找
+获取到某个对象的原型对象即构造函数原型：Object.getPrototypeOf(Object.prototype)   //return null;
+注：实例有原型对象即构造函数的原型，但实例没有原型属性
+constructor属性：
+prototype默认有一个constructor属性，默认指向prototype所在的构造函数，并非是父级。  例 p.prototype.constructor===p  //true
+做原型赋值或继承时，要重定向一次constructor
+例： function P(){};
+     function C(){P.call(this);};
+     C.prototype=Object.creat(p.prototype);
+     C.constructor=C;
+
+o1.isPrototypeOf(o2);  //判断o1是否在o2的原型链上
+Object.prototype.__proto__
+支持__proto__属性的浏览器，__proto__指向当前对象的原型对象，即构造函数的prototype属性。
+可以改写原型对象，例 ：
+	var obj={};
+	var p={};
+	obj.__proto__=p;
+	Object.getPrototypeOf(obj)===p  //true   ,不提昌，建议用Object.getprototypeOf()和Object.setPrototypeOf()
+
+获取实例的原型对象三种方法：
+obj.__proto__
+obj.constructor.prototype	//不要用此方法直接改原型对象，除非同时修改构造函数指向
+Object.getPrototypeOf(obj)
