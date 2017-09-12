@@ -1,0 +1,28 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+		//题目：找出对象 obj 不在原型链上的属性(注意这题测试例子的冒号后面也有一个空格~)
+		// 1、返回数组，格式为 key: value  中间加空格！
+		// 2、结果数组不要求顺序
+		//输入：var C = function() {this.foo = 'bar'; this.baz = 'bim';}; 
+		//		C.prototype.bop = 'bip'; 
+		//		iterate(new C());
+		function iterate(obj){
+			return Object.getOwnPropertyNames(obj).map(function(key){
+				return key+': '+obj[key];	//空格，空格！
+			});
+		}		
+
+		//列举下找出对象key的方法
+		var o1={p1:123};
+		var o2=Object.create(o1,{p2:{value:456,enumerable:true},p3:{value:'test'}});
+		Object.getOwnPropertyNames(o2);		//p2,p3  查找出自身带有属性，（！原型链）
+		Object.keys(o2);		//p2  查找出自身可枚举属性
+		for(val in o2){}		//p1,p2 查找出自身+原型链上可枚举的属性
+		o2.hasOwnPerprotyNames('p1');  //false    验证是否是自身属性   
+		</script>
+	</body>
+</html>
