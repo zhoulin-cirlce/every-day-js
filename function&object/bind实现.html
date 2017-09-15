@@ -1,0 +1,19 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+		//题目：如果浏览器没有bind方法，添加一个bind方法
+		 Function.prototype.bind=function(){
+			 var fn=this;	//因为是函数调用bind方法，此时this指向要绑定的函数
+			 var context=arguments[0];	//要绑定的this指向，bind的第一个参数
+			 var args=[].slice.call(arguments,1);  //类似数组arguments，截取bind第二个开始的参数，组成数组
+			 return function(){
+				 return fn.apply(context,args);	 //反回一个新的函数，绑定好this并传参
+			 }
+		 }
+		
+		</script>
+	</body>
+</html>

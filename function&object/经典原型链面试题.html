@@ -1,0 +1,20 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+		//题目：
+		var F=function(){}
+		Object.prototype.a='kk';
+		Function.prototype.b='zz';
+		var f=new F();
+		//求以下是否能调用：
+		console.log(f.a,f.b);		
+		//解答：只能调用f.a
+		//因为f.__proto__==>F.prototype,F.prototype==>Object.prototype,所以不可以访问b
+		//因为f.prototype.__proto__==Object.prototype ,所以可以访问a
+		//扩展:如果想访问b，则 f.constructor.b 即可
+		</script>
+	</body>
+</html>

@@ -14,6 +14,14 @@
 			args.shift();
 			return fn.apply(this, args);
 		}
+
+		//题目：将数组中的空元素变为'undefined'
+			var arr=['a', ,'b'];
+			function print(i){
+				console.log(i);
+			}
+			arr.forEach(print);		//a,b    forEach会跳过空元素,不会跳过undefined
+			Array.apply(null,arr).forEach(print);   //a,undefined,b    Array的构造函数会将空元素转为undefined
 	</script>
 </body>
 
