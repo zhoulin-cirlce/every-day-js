@@ -69,8 +69,18 @@ packages/meteor-message-api
 线性长度应小于数组（存储）长度
 地址计算 LOC(ai)=LOC(a1)+(i-1)*c  //1.a后的数为下标，c是单个占用的存储单元
 				//2.每个单元的存储时间相等，时间复杂度计为O(1),叫随机存储结构。
-
-
+线性表的抽象数据类型方法：
+InitList(*L)  	初始化一个线性表
+ListEmpty(L)  	判断线性表是否为空，返回true,否则返回false.
+ClearList(*L) 	清空线性表
+GetElem(L,i,*e) 将线性表L的第i个元素返回给e.
+LocateElem(L,e) 判断线性表L是否存在元素e，存在返回序号(下标)，否则返回0
+ListInsert(*L,i,e) 在线性表L中的第i个元素位置插入元素e
+ListDelete(*L,i,e) 删除线性表L的第i个元素，并用e返回其值
+ListLength(L)  返回线性表L的元素个数
+单链表：
+结表表示：设P是指向线性表第i个元素的指针，节点名为ai。 那么ai的数据域可以表示p->data, ai的指针表示 p->next。
+	  也就是说p->data=ai, p->next->data=a(i+1)
 
 
 面向对象编程
