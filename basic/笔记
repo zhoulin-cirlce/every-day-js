@@ -58,6 +58,7 @@ packages/meteor-message-api
      因为Number(null)==0,但是在执行null==0时，null和undefined不会调用Number()进行转换
   2.个别电脑访问不了个别接口，报错：net::ERR_ADDRESS_UNREACHABLE
     DNS配置问题，可以ping一下接口域名，再修改host文件，从外部访问
+  3.replace方法如果第二个参数是函数，可以接受$0,$1..$99这种参数，第一个参数是正则的结果，第二个参数是正则的第一个子表达试的值，要求以$开头。
 
 
 

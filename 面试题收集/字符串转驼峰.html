@@ -1,0 +1,17 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+		//题目：border-bottom-color ----> borderBottomColor
+		function _str(str){
+			str.replace(/\-(\w)/g,function($0,$1){		//第一个参数是正则匹配结果，每二个参数是第一个子表达式(\w)的结果，以$开头
+				return $1.toUpperCase();	//转为大写
+			});
+		}	
+		_str('border-bottom-color');	//borderBottomColor
+		 
+		</script>
+	</body>
+</html>
