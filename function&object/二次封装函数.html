@@ -4,34 +4,19 @@
 	</head>
 	<body>
 		<script type="text/javascript">
-		//题目：
-		function c(){
-			console.log(a);
-			console.log(this.a);
+		//题目：实现函数 partialUsingArguments，调用之后满足如下条件：
+		// 1、返回一个函数 result
+		// 2、调用 result 之后，返回的结果与调用函数 fn 的结果一致
+		// 3、fn 的调用参数为 partialUsingArguments 的第一个参数之后的全部参数以及 result 的调用参数
+		function partialUsingArguments(fn){
+			var args=[].slice.call(arguments,1);
+			function result(){
+				return fn.apply(args.concat([].slice.call(arguments,0)));
+			}
+			return result;
 		}
-		var a=3;
-		(function(){
-			var a=4;
-			c();
-		})();
-		
-		//result:
-		3		//函数的作用域只与定义时的上下文有关，执行环境只能改变this，和参数
-		3		//自调用函数，this指向window
 
-		//----------------------------改变作用域链
-		function c(a){
-			console.log(a);
-			console.log(this.a);
-		}
-		var a=3;
-		(function(){
-			var a=4;
-			c(a);
-		})();
-		//result:
-			4			//参数改变作用域链
-			3			//this指向window
+		
 		</script>
 	</body>
 </html>

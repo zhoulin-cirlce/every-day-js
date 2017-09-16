@@ -1,0 +1,32 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+		//题目：已知 fn 为一个预定义函数，实现函数 curryIt，调用之后满足如下条件：
+		//柯里化：根据fn的参数长度，分解分单个参数的函数嵌套，直到最底层，返回fn调用分解的函数参数。
+		//如：fn(1,2,3)===curryIt(fn)(1)(2)(3)
+			var fn = function (a, b, c) {
+					return a + b + c
+				}; 
+			curryIt(fn)(1)(2)(3);	//6
+			
+		//----解答-----
+		function curryIt(fn){
+			var length=fn.length;	//求出fn参数长度，得出分解函数个数
+			var args=[];
+			return function(arg){
+				args.push(arg);		//args作为最后参数调用
+				if(args.length<length){
+					return arguments.callee;	//继续分解返回单个函数
+				}else{
+					fn.apply('',args);
+				}
+			}
+		}
+
+		
+		</script>
+	</body>
+</html>
