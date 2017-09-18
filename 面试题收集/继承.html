@@ -1,0 +1,30 @@
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8" content="none">
+</head>
+
+<body>
+	<script type="text/javascript">
+		//题目：继承
+		var obj1 = { name: 'one' };
+		obj2 = Object.create(obj1);
+		obj2.name = 'two';
+		console.log(obj1.name);
+		//one
+
+		var obj1 = {prop:{name:'one'}};
+		obj2 = Object.create(obj1);
+		obj2.prop.name = 'two';
+		console.log(obj1.prop.name);
+		//two
+
+		var obj1 = {list:['one','one','one']};
+		obj2 = Object.create(obj1);
+		obj2.list[0] = 'two';
+		console.log(obj1.list[0]);
+		//two
+	</script>
+</body>
+
+</html>

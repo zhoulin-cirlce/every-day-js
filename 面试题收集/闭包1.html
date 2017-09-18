@@ -1,0 +1,48 @@
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8" content="none">
+</head>
+
+<body>
+	<script type="text/javascript">
+		//题目：闭包练习
+		var x = 20;
+		var a = {
+			x: 15,
+			fn: function () {
+				var x = 30;
+				return function () {
+					return x;
+				};
+			}
+		}
+		console.log(a.fn());//function		返回匿名函数
+		console.log(a.fn()());//30		返回最里x，向上查找到x=30
+		console.log((a.fn())());//30	此处虽将this指向改为window,但返回不是this.x,而是x。此时x只和定义时作用域有关,故x=30
+		console.log((a.fn())() == a.fn()());//true   同上
+		console.log(a.fn().call(this));//30		//和this无关
+		console.log(a.fn().call(a));//30		//和this无关
+
+		//题目：如果变为this.x
+		var x = 20;
+		var a = {
+			x: 15,
+			fn: function () {
+				var x = 30;
+				return function () {
+					return this.x;
+				};
+			}
+		}
+		console.log(a.fn()); //function
+		console.log(a.fn()()); //20		a.fn()中的this指向a对象，a.fn()()并不是再包一层对象，而是直接返回一个函数,this指向widow
+		console.log((a.fn())()); //20  	 this指向window
+		console.log((a.fn())()==a.fn()());  //true   
+		console.log(a.fn().call(this)); //20	this指向window
+		console.log(a.fn().call(a)); //15     this指向a
+
+	</script>
+</body>
+
+</html>
