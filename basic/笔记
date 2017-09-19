@@ -59,6 +59,7 @@ packages/meteor-message-api
   2.个别电脑访问不了个别接口，报错：net::ERR_ADDRESS_UNREACHABLE
     DNS配置问题，可以ping一下接口域名，再修改host文件，从外部访问
   3.replace方法如果第二个参数是函数，可以接受$0,$1..$99这种参数，第一个参数是正则的结果，第二个参数是正则的第一个子表达试的值，要求以$开头。
+  4.关闭linux进程命令：gnome-system-monitor
 
 
 
@@ -104,6 +105,12 @@ new关建字都做了什么：
 对普通函数使用new关键字，返回一个空对象
 
 var person2=Object.create(person1);  //person2继承了person1的属性与方法
+例 var person1={name:"keyue",like:{paly:'game',study:'english'}}
+   var person2=Object.create(person1); 
+       person1.like.paly='panio';
+       person1.name='circle';
+	console.log(person1);	//{name:'keyue',like:{paly:'panio',study:'english'}};    因为name是原始类型，like的值paly是引用类型
+	console.log(person2);   //{name:'circle',like:{paly:'panio',study:'english'}};   
 查询person对象的key:
   Object.keys(person);	//查询自身可枚举的属性
   for key in person    //会查自身及原型链上查找可枚举的属性

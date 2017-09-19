@@ -1,0 +1,60 @@
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8" content="none">
+</head>
+
+<body>
+	<script type="text/javascript">
+		//题目：去除数组重复元素
+		//方法一：一一比较，用空数组去接受不重复元素
+		function _unique1(arr){
+			var newarr=[];
+			for(var i=0;i<arr.length;i++){
+				var same=false;
+				for(var j=i+1;j<arr.length;j++){
+					if(arr[i]==arr[j]){
+						same=true;
+						break;
+					}
+				}
+				if(same!=true){
+					newarr.push(arr[i]);
+				}
+			}
+			return newarr;
+		}
+		//方法二：  先排序，再从头与最后开始的元素一一比较，返回新数组
+		function _unique2(arr){
+			var newarr=[];
+			arr.sort();		//	让相同元素相邻
+			for(var i=0;i<arr.length;i++){
+				var same=false;
+				for(var j=arr.length-1;j>i;j--){
+					if(arr[i]==arr[j]){
+						same=true;
+						break;
+					}
+				}
+				if(same!=true){
+					newarr.push(arr[i]);
+				}
+			}
+			return newarr;
+		}
+		//方法三(推荐)：	用一个空对象来比较，没有当前key值就赋值
+		function _unique3(arr){
+			var newarr=[];
+			var json={};
+			for(var i=0;i<arr.length;i++){
+				if(!json[arr[i]]){
+					newarr.push(arr[i]);
+					json[arr[i]]=1;
+				}
+			}
+			return newarr;
+		}
+	</script>
+</body>
+
+</html>

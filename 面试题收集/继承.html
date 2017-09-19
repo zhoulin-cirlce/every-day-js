@@ -11,19 +11,19 @@
 		obj2 = Object.create(obj1);
 		obj2.name = 'two';
 		console.log(obj1.name);
-		//one
+		//one				create方法创建的模型是一个对象而不是构造函数。name的值是原始类型，所以赋值是copy，不会改变原值
 
 		var obj1 = {prop:{name:'one'}};
 		obj2 = Object.create(obj1);
 		obj2.prop.name = 'two';
 		console.log(obj1.prop.name);
-		//two
+		//two		这里prop是一个对象，create之后传递的是引用地址，所以会改变原值。如果直接obj2.prop={},那么obj1.prop不会变
 
 		var obj1 = {list:['one','one','one']};
 		obj2 = Object.create(obj1);
 		obj2.list[0] = 'two';
 		console.log(obj1.list[0]);
-		//two
+		//two		此原理同2,传递的引用地址
 	</script>
 </body>
 
