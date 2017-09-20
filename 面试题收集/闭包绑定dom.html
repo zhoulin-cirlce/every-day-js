@@ -1,0 +1,43 @@
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8" content="none">
+</head>
+
+<body>
+	<!--有如下结构-->
+	<ul>
+		<li>click me!</li>
+		<li>click me!</li>
+		<li>click me!</li>
+		<li>click me!</li>
+	</ul>
+	<script type="text/javascript">
+	(function(){
+		//依次点击
+		var element=document.getElementsByTagName('li');
+		var length=element.length;
+		for(var i=0;i<length;i++){
+			element[i].onclick=function(){
+				alert(i);		// 4,4,4,4		因为先循环结束，i=4;再触发事件
+			}
+		}
+
+		//若要改成结果为0,1,2,3
+		var element=document.getElementsByTagName('li');
+		var length=element.length;
+		function handle(a){
+			return function(){		//onclick在绑定时传入了对应的i值，不被释放。返回此匿名函数，当click事件触发时调用此函数
+				alert(a);
+			}
+		}
+
+		for(var i=0;i<length;i++){
+			element[i].onclick=handle(i);
+		}
+	})()
+
+	</script>
+</body>
+
+</html>

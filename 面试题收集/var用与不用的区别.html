@@ -1,0 +1,27 @@
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8" content="none">
+</head>
+
+<body>
+	<script type="text/javascript">
+		//题目：
+			function f1() {
+		　　　　var n = 999;
+		　　　　nAdd = function () { n += 1 }
+		　　　　function f2() {
+			　　　　console.log(n);
+		　　　　}
+		　　　　return f2;
+		　　}
+		　　var result = f1();
+		　　result(); //999	  f2从内向上查找到n=999
+		　　nAdd();					//函数的nAdd变量没有用var声明，当作用域链找不到这个变量时，在全局对象下自动创建一个nAdd属性并赋值
+									 //此处nAdd在全局下调用，但在声明时用到n，形成闭包，n没有释放n+=1 
+		　　result();//1000
+			//注：var在全局下生成的全局变量与上题生成的全局属性，不同在于，属性可以通过 delete nAdd;来删除（严格模式会报错），变量不可。
+	</script>
+</body>
+
+</html>
