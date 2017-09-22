@@ -1,0 +1,19 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+		//题目：setInterval()函数的执行是从第一次函数开始执行时计算。假设函数执行一次要15毫秒。每100毫秒执行一次，那么第二次是与第一次间隔85毫秒后开始执行
+		//如果想要每次真正做到间隔100毫秒，那么我们可以自定义一个setInterval()函数
+		function _setInterval(fn,time){
+			var timer=setTimeout(function(){	//延时函数
+				fn.call(null);			//逐步执行，确保每次fn执行完之后，才开始计算延时下一次的执行
+				timer=setTimeout(arguments.callee,time);	//延时调用自身‘匿名函数’
+			},time);
+		}
+		
+		
+		</script>
+	</body>
+</html>
