@@ -1,0 +1,59 @@
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8" content="none">
+</head>
+
+<body>
+	<script type="text/javascript">
+		//普通调用
+		var flag = "window";
+		var object = {
+			flag: "local",
+			sayFlag: function () {
+				return this.flag;
+			}
+		}
+		object.sayFlag();//local	此时this指向object
+		//闭包调用
+		var flag = "window";
+		var object = {
+			flag: "local",
+			sayFlag: function () {
+				return function () {
+					return this.flag;
+				}
+			}
+		}
+		object.sayFlag()();	//window	此时作为匿名函数调用，this指向window
+		//用闭包方式编码，返回'local'
+		var flag = "window";
+		var object = {
+			flag: "local",
+			sayFlag: function () {
+				var that = this;
+				return function () {
+					return that.flag;	//利用闭包会保存变量不释放的原理，存储上一次的this,但如果sayFlag方法被赋值给一个变量，便不安全，this会被改变
+				}
+			}
+		}
+		object.sayFlag()();	//local		以对象的形式调用that的值指向object
+		_s = object.sayFlag;
+		_s()();  //window	 属性被以一个值赋值后，以普通方法调用。此时that的值指向window
+
+		//闭包常量常驻内存，不销毁
+		var say = function () {
+			var i = 1;
+			var sayName = function () {
+				i++;
+				alert(i);
+			}
+			return sayName;
+		}
+		var result1 = say();
+		result1();	//2		初始化i=1，i++后再打印，i=2;
+		result1();  //3		用的同一个变量result1调用，上一次的i变量内存未释放，i=2+1=3;
+	</script>
+</body>
+
+</html>

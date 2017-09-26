@@ -64,6 +64,7 @@ packages/meteor-message-api
     正常任务在下一轮EventLoop执行，微任务在本轮结束开始执行。setTimeout属于正常任务，微任务主要是process.nextTick和Promise。所以Promise.resolve在setTimeout(fn,0)前面执行
   6.具名函数：创建一个变量，内容为一个带有名称的函数,如： var fn1=function test(){};  //此时test函数名只能在函数的内部使用。
   7.直接通过给new Function('do something')传递字符串来创建函数，创建的是匿名函数
+  8.''==false	//true     []==false  //true     {}==false   //false    注：除null和undefined以外，用==做比较时会自动调用valueOf()或toString()方法。有二者会转成0==false,而对象会转为NaN不大于0也不小于0.{}==false和{}==true都为false
 
 
 
