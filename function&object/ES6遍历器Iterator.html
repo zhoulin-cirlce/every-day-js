@@ -1,0 +1,26 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+		//题目：ES6中遍历器Iterator属于一种协议，规定任意对象只要部署了next方法，就可以作为遍历器。但是next方法必须返回一个
+		//包含value和done两个属性的对象。其中value属性为当前遍历位置的值，done是一个布尔值，表示遍历是否结束。
+		function makeIterator(arr){
+			var nextIndex=0;
+			return{
+				next:function(){
+					return nextIndex<arr.length ? {value:arr[nextIndex++],done:false} : {done:true};
+				}
+			}
+		}
+		//测试:
+		var it=makeIterator(['a','b']);
+		it.next().value;	//'a'
+		it.next().done;     //false
+		it.next().value;    //'b'
+		it.next().done;		//true
+	
+		</script>
+	</body>
+</html>

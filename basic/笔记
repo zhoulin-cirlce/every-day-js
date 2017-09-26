@@ -206,3 +206,56 @@ this的使用注意
    (2)将类似数组的对象转为数组：		[].slice.apply(null,arguments)
 3.bind	将函数体内部的this绑定到bind的参数中，bind可以绑定前面的部分绑数，在赋值为一个函数时有应用
 注：三种方式第一个参数如果为空、null、undefined则默认this为全局对象window. 若第一个参数是原始类型，如果转为包装对象{[[PrimitiveValue]]:5}。用call和apply绑定的函数会立即执行一次。bind不会立即执行。
+
+
+
+
+
+ES6:
+1、解构：
+   解构可以不完全解构，即传多少，解多少
+   数组的解构赋值右边必须是数组或类似数组(字符串)
+   允许指定默认值，如果赋值不===undefined,默认值不生效。 let [x,y=9]=['a',undefied];  //x='a',y=9  如果赋值成功，则默认值代码不会执行
+   对象的解构没有次序，变量与属性名必须同名。如果不一致，则应如下： 
+	let {foo:baz}={foo:"hello",bar:"world"};  console.log(baz,foo)  //"hello",foo is not defined
+   解构可以数组与对象嵌套使用
+     let obj={
+       p:['hello',{y:'world'}];
+     }
+     let {p,p:[x,{y}]}=obj;	//为了给p赋值，前面才加p变量
+      console.log(x,y,p)  // "hello","world",["hello",{y:"world"}]
+   解构赋值时，右边是数字或布尔值，则会先转为对象
+   注：解构的变量声明时不要使用圆括号会报错，赋值时可以用，尽量不要用。
+2、const  常量声明，常量的值不可以被改变
+3、Set  新数据结构，类似数组，本身是一个构造函数，Set数据里不会有重复的值  var s=new Set()
+4、Set的属性与方法：
+	s.size()     返回成员总数
+	s.add(2)     添加一个新值2
+	s.delete(2)  删除值2
+	s.has(2)     返回布尔值，判断是否有为2的值
+	s.clear()    清除所有值
+5、Map 数据结构，与Set的属性与方法一样，set替换了add()，加了get(key)方法，Map是键值对。var m=new Map();  m.set('name','keyue');
+6、参数的解构：rest(...)运算符。指可以向函数传递任意数量的参数，(...values)为形参，参数都存储在里面，可以解构。
+例：   function(s,...values){
+	  for(val in values){
+	     s+=val;
+	  }
+	  return s;
+	}
+也可以将数组转为参数，例：
+	function f(s1,s2,s3,s4){console.log(s1+s2+s3+s4);}
+	var a=["a2","a3","a4"];
+	f("a1",...a)		//result:  a1a2a3a4
+
+7、generator函数，属于内部遍历器。当调用generator函数的时候，该函数并不执行，而是返回一个遍历器。以后，每次调用这个遍历器的next方法，就从函数体的头部或者上一次停下来的地方开始执行，直到遇到下一个yield语句为止，并返回该yield语句的值。yield有点类似于return语句，都能返回一个值。区别在于每次遇到yield，函数返回紧跟在yield后面的那个表达式的值，然后暂停执行，下一次从该位置继续向后执行。
+例：function* helloWorldGenerator(){
+	yield 'hello';
+	yield 'world';
+     }
+    var hw=helleWorldGenerator();  //不执行，返回一个遍历器
+    hw.next();	// {value:'hello',done:false}   执行到第一个yield语句并返回和结束
+    hw.next();	// {value:'world',done:false}   从上一次的yield语句开始执行，直到下一个yield语句返回并结束
+    hw.next();  // {value:undefined,done:true}  从上一次的yield语句开始执行，没有下一个yield语句就改变状态并返回
+    //generator函数的重要意义在于操作异步函数
+
+
