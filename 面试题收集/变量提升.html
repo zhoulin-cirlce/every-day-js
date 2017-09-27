@@ -1,0 +1,27 @@
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8" content="none">
+</head>
+
+<body>
+	<script type="text/javascript">
+		//题目：变量提升
+		//函数的声明提升
+		var x=1;var y=0;
+		function sum(n){return n=n+1;}
+		y=sum(x);
+		console.log(y);		//4  函数声明得到了提升
+		function sum(n){return n=n+3;}
+		
+		function C(){
+			this.name='keyue';
+		}
+		function B(){}
+		B.prototype=Object.create(C.prototype);
+		B.constructor=B;
+		C.call(B)
+	</script>
+</body>
+
+</html>
