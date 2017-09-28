@@ -1,0 +1,33 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+		//题目：将异步请求转为Promise任务
+		function get(url){
+			return new Promise(function(resolve,reject){	//新建一个promise对象，返回状态
+				var req=new XMLHttpRequest();	//创建一个http请求
+				req.open('GET',url);	//打开
+				req.onload=function(){		
+					if(req.status === 200){
+						resolve(req.response);	//请求成功的结果放入resolve
+					}else{
+						reject(Error(req.statusText));   //请求失败的信息传递给reject
+					}
+				};
+				req.onerror=function(){
+					reject(Error('Network Error'));
+				};
+				req.send();
+			});
+		}
+		get('story.json').then(function(reponse){	//回调处理
+			console.log('Success!',response);
+		},function(error){
+			console.error("Faile!",error);
+		})
+		
+		</script>
+	</body>
+</html>

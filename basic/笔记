@@ -208,8 +208,46 @@ this的使用注意
 注：三种方式第一个参数如果为空、null、undefined则默认this为全局对象window. 若第一个参数是原始类型，如果转为包装对象{[[PrimitiveValue]]:5}。用call和apply绑定的函数会立即执行一次。bind不会立即执行。
 
 
+Promise对象：
+三种状态：pendding(请求前)，resolve(请求成功)，reject(请求失败)
+1.将异步请求转为Promise任务:
+		function get(url){
+			return new Promise(function(resolve,reject){	//新建一个promise对象，返回状态
+				var req=new XMLHttpRequest();	//创建一个http请求
+				req.open('GET',url);	//打开
+				req.onload=function(){		
+					if(req.status === 200){
+						resolve(req.response);	//请求成功的结果放入resolve
+					}else{
+						reject(Error(req.statusText));   //请求失败的信息传递给reject
+					}
+				};
+				req.onerror=function(){
+					reject(Error('Network Error'));
+				};
+				req.send();
+			});
+		}
+		get('story.json').then(function(reponse){	//回调处理
+			console.log('Success!',response);
+		},function(error){
+			console.error("Faile!",error);
+		})
 
+2.可以串联then方法执行回调：(只有状态为resolve时才会执行then方法，如果是reject会执行catch方法)
+	new Promise(function(resolve,reject){
+	   setTimeout(function(){resolve(10);},3000)	
+	})
+	.then(function(num){console.log('first then:',num);return num*2;});  //first then:10,回调返回会给到下一个then方法
+	.then(function(num){console.log('second then:',num);return num*2;}); //second then:20,返回值往下传
+	.then(function(num){console.log('last then:',num);});  //last then:40,这里取到的num是上一个then方法的返回
 
+3.Promise.all()接收多个promise作为参数，以数组的形式，只有所有promise都执行完成才执行回调。失败则执行catch(function(err){}),catch会捕捉到首个reject的函数。
+	例：
+	var request1=fetch('/user.json'); var request2=fetch('/articles.json');	//fetch返回的是promise
+	Promise.all([request1,request2]).then(function(results){});
+
+4.Promise.race()和all()基本一致，只是race只要有一个执行成功结束就会执行
 
 ES6:
 1、解构：
