@@ -23,10 +23,27 @@
 			})(i);
 		}
 		//2.如果期望代码的输出变成 0 -> 1 -> 2 -> 3 -> 4 -> 5，并且要求原有的代码块中的循环和两处 console.log 不变，该怎么改造代码
+		//思路：通过Promise异步处理，获取每一次的状态来控制最后一个打印，前面的0-4打印主要是依靠延时的时间加长，不然5个延时几乎会同时触发
+		var pres=[];   //用数组来存放每一次promise的结果
+		for(var i=0;i<5;i++){
+			(function(i){
+				pres.push(new Promise(function(resolve,reject){
+					setTimeout(function(){
+						console.log(new Date,i);
+						resolve();	//记得回传状态
+					},1000*i);
+				}));
+			})(i);
+		}
+		Promise.all(pres).then(function(){	//所有的状态完成则回调
+			setTimeout(function(){
+				console.log(new Date(),i)
+			},1000);	//距离上一次的打印，回调也得来个延时，不然会紧接着4一起打印
+		})
 
 		//3.ES7优化
 		// 模拟其他语言中的 sleep，实际上可以是任何异步操作
-		const sleep = (timeountMS) => new Promise((resolve) => {
+		const sleep = (timeountMS) => new Promise((resolve) =>{
 			setTimeout(resolve, timeountMS);
 		});
 
