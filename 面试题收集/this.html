@@ -1,0 +1,31 @@
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8" content="none">
+</head>
+
+<body>
+	<script type="text/javascript">
+	//求打印结果
+		var myObject = {
+			foo: "bar",
+			func: function () {
+				var self = this;
+				console.log("outer func: this.foo = " + this.foo);
+				console.log("outer func: self.foo = " + self.foo);
+				(function () {
+					console.log("inner func: this.foo = " + this.foo);
+					console.log("inner func: self.foo = " + self.foo);
+				}());
+			}
+		};
+		myObject.func();
+		//result:
+		//outer func: this.foo = bar;  	//this指向myObject
+		//outer func: self.foo = bar;		//self保存的this指向myObject
+		//inner func: this.foo = undefined;		//this指向window
+		//inner func: self.foo = bar;			//self保存的this指向myObject
+	</script>
+</body>
+
+</html>
