@@ -1,0 +1,28 @@
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" content="none">
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 打印效果:
+			// XXXX年XX月X日 星期X--班级总分为:81
+			// 格式要求：
+			// 1、显示打印的日期。 格式为类似“XXXX年XX月XX日 星期X” 的当前的时间。
+			// 2、计算出该班级的平均分（保留整数）。
+			// 同学成绩数据如下：
+			// "小明:87; 小花:81; 小红:97; 小天:76;小张:74;小小:94;小西:90;小伍:76;小迪:64;小曼:76"
+			function cj(arr){
+				var date=new Date();
+				date=date.getFullYear()+'年'+date.getMonth()+'月'+date.getDate()+'日'+' 星期'+date.getDay();
+				sum=0;
+				arr.forEach(function(val){
+					sum+=val;
+				});
+				str=date+'--班级总分为:'+parseInt(sum/arr.length);
+				return str;	
+			}
+			var arr=[87,81,97,76,74,94,90,76,64,76];
+			console.log(cj(arr));
+		</script>
+	</body>
+</html>
