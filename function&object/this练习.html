@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //练习一：
+        function a(xx){
+            this.x=xx;
+            return this;
+        }
+        var x=a(5); var y=a(6);
+        console.log(x.x,y.x);       //result: undefined,6
+        //练习二：
+        var sex='male';
+        var saySex={
+            sex:'famale',
+            setsex:function(){
+                function getsex(){
+                    console.log('this sex=',this.sex);
+                }
+                getsex()
+            }
+        }
+        saySex.setsex();    //this sex= male;
+        var cc=saySex.setsex;
+        cc();   //this sex=male;    函数嵌套函数，this指向window
+    </script>
+</body>
+</html>
