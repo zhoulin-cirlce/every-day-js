@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #container{
+            width:200px;
+            height:100px;
+            background:red;
+            margin:0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        //防抖:你尽管触发事件，但是我一定在事件触发 n 秒后才执行，
+        //如果你在一个事件触发的 n 秒内又触发了这个事件，那我就以新的事件的时间为准，n 秒后才执行，
+        //总之，就是要等你触发完事件 n 秒内不再触发事件，我才执行，真是任性呐!
+        var container=document.getElementById('container');
+        var count=1;
+        function getCount(e){
+            container.innerHTML=count++;    //此时可测出getCount被触发N次,原本我们设定只想触发一次
+            console.log(count);
+            console.log(this);
+            console.log(e)
+        }
+        // container.onmousemove=getCount;
+
+        //1.闭包防抖
+        // function test(fun,wait){
+        //     var timeout;
+        //     return function(){
+        //         clearTimeout(timeout);
+        //         timeout=setTimeout(fun,wait);
+        //     }
+        // }
+        // container.onmousemove=test(getCount,1000)
+        //1.1 this指向被改变:原本this指向是dom,目前变为指向window
+        //    function test(fun,wait){
+        //     var timeout;
+        //     return function(){
+        //         clearTimeout(timeout);
+        //         var _this=this;
+        //         timeout=setTimeout(function(){
+        //             fun.apply(_this);       //此时this指向改回为dom
+        //         },wait);
+        //     }
+        // }
+        // container.onmousemove=test(getCount,1000)
+
+        //1.2 events对象找不到了:直接绑定函数是可以取到参数MouseEvent对象的,闭包后取到的是undefined
+        function test(fun,wait){
+            var timeout;
+            return function(){
+                clearTimeout(timeout);
+                var args=arguments;     //触发事件时调用函数接收到参数e
+                var _this=this;
+                timeout=setTimeout(function(){
+                    fun.apply(_this,args);
+                },wait);
+            }
+        }
+        container.onmousemove=test(getCount,1000)
+        
+    </script>
+</body>
+</html>
