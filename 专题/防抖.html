@@ -27,10 +27,11 @@
             console.log(count);
             console.log(this);
             console.log(e)
+            return 'yes'
         }
         // container.onmousemove=getCount;
 
-        //1.闭包防抖
+        //1.闭包加定时防抖
         // function test(fun,wait){
         //     var timeout;
         //     return function(){
@@ -53,19 +54,43 @@
         // container.onmousemove=test(getCount,1000)
 
         //1.2 events对象找不到了:直接绑定函数是可以取到参数MouseEvent对象的,闭包后取到的是undefined
-        function test(fun,wait){
+        // function test(fun,wait){
+        //     var timeout;
+        //     return function(){
+        //         clearTimeout(timeout);
+        //         var args=arguments;     //触发事件时调用函数接收到参数e
+        //         var _this=this;
+        //         timeout=setTimeout(function(){
+        //             fun.apply(_this,args);
+        //         },wait);
+        //     }
+        // }
+        // container.onmousemove=test(getCount,1000)
+
+        //1.3 定时器执行将操作延迟生效,体验不好,应立即执行
+        function test(fun,wait,now){
             var timeout;
+            var res;  //test在绑定时已执行,每次移动会触发返回的函数,如果res定义在下方,res会一直被重置为undefined
             return function(){
-                clearTimeout(timeout);
-                var args=arguments;     //触发事件时调用函数接收到参数e
                 var _this=this;
-                timeout=setTimeout(function(){
-                    fun.apply(_this,args);
-                },wait);
+                var args=arguments;
+                if(timeout){clearTimeout(timeout)};
+                if(now){
+                    var current=!timeout;  //timeout为空的时候才会执行,否则会一直触发
+                    timeout=setTimeout(function(){
+                        timeout=null;
+                    },wait);
+                    if(current){res=fun.apply(_this,args);}
+                }else{
+                    timeout=setTimeout(function(){
+                        fun.apply(_this,args);
+                    },wait)
+                }
+                console.log(res)
+                return res  //如果getCount有返回值,在setTimeout异步中执行会返回undefined,所以只能在now=true时返回值
             }
         }
-        container.onmousemove=test(getCount,1000)
-        
+        container.onmousemove=test(getCount,2000,true)
     </script>
 </body>
 </html>
