@@ -1,0 +1,34 @@
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8" content="none">
+</head>
+
+<body>
+	<script type="text/javascript">
+		//题目：函数柯里化
+		var currying=function(fn){
+			var args=[];
+			return function(){
+				if (arguments.length ===0){
+					return fn.apply(this,args);
+				}else{
+					args.push(arguments);
+					return arguments.callee;
+				}
+			}
+		}
+		//非柯里化
+		Function.prototype.uncurrying=function(){
+			var self=this;
+			return function(){
+				var obj=Array.prototype.shift.call(arguments);
+				return self.apply(obj,arguments);
+			}
+		}
+
+		
+	</script>
+</body>
+
+</html>
