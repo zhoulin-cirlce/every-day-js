@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #container{
+            width:200px;
+            height:100px;
+            background:red;
+            margin:0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        //场景:比例QQ有1000个人,要渲染这个页面时要创建1000个dom节点,可能会使页面'假死',可以通过分时函数解决
+        //分时函数解决:原本1秒创建1000个节点,改为每200毫秒创8个节点
+        //当然,很多场景可以结合用分布式加载数据来进行,才能得到更好的优化与体验
+        function timeSharing(arr,fn,count){     //arr表示要创建的节点总数,fn表时单个间隔的业务处理函数,count表示单个间隔要处理的节点数
+            var t;
+            var start=function(){
+                for(var i=0;i<Math.min(arr.length,count);i++){
+                    var dom=arr.shift();
+                    fn(dom);
+                }
+            };
+            return function(){
+                t=setInterval(function(){
+                    if(arr.length===0){
+                        return clearInterval(t);
+                    }else{
+                        start()
+                    }
+                },200);
+            }   
+        }
+
+        //调用
+        var arry=[];
+        for(var j=1;j<=1000;j++){
+            arry.push(j);
+        }
+        var renderList=timeSharing(arry,function(n){
+            var div=document.createElement('div');
+            div.innerHTML=n;
+            document.body.appendChild(div);
+        },8)
+        renderList();
+
+    </script>
+</body>
+</html>
