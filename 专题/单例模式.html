@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #container{
+            width:200px;
+            height:100px;
+            background:red;
+            margin:0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        //单例模式:用一个变量来标志某个类是否已创建过(对象)实例,如果是则返回上一个(对象)实例,如果不是则返回一个新的(对象)实例
+        var instance;
+        var CreateDiv=function(html){
+            if(instance){
+                return instance;
+            }
+            this.html=html;
+            this.init();
+            return instance=this;
+        };
+        CreateDiv.prototype.init=function(){
+            var div=document.createElement('div');
+            div.innerHTML=this.html;
+            document.body.appendChild(div);
+        };
+        var a=new CreateDiv('sven1');
+        var b=new CreateDiv('sven2');
+        console.log(a==b);
+
+    </script>
+</body>
+</html>
