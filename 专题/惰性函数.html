@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #container{
+            width:200px;
+            height:100px;
+            background:red;
+            margin:0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        //场景:因为浏览器的差异性问题,常常需要做各种兼容处理.比如事件的监听,W3C是addEventListener,IE是attachEvent
+        //传统解决方案:利用封装函数addEvent,每次调用该函数时都要做一次if判断
+        // var addEvent=function(elem,type,handler){
+        //     if(window.addEventListener){
+        //         return elem.addEventListener(type,handler);
+        //     }else if(window.attachEvent){
+        //         return elem.attachEvent('on'+type,handler);
+        //     }
+        // }
+        //惰性函数解决方案:首次调用函数就判断浏览器兼容,重写方法并内部调用(以后每次调用都是重写后的方法,不会再次判断浏览器兼容)
+        var addEvent=function(elem,type,handler){
+            if(window.addEventListener){
+                addEvent=function(elem,type,handler){
+                    return elem.addEventListener(type,handler);
+                }
+            }
+            if(window.attachEvent){
+                addEvent=function(elem,type,handler){
+                    return elem.attachEvent('on'+type,handler);
+                }
+            }
+        };
+        var div=document.getElementById('container');
+        addEvent(div,'click',function(){
+            alert('click!');
+        })
+    </script>
+</body>
+</html>
