@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //策略模式:是指定义一系列的算法，一个一个的封装起来，将不变与变化的分开来，根据不同的情况调用不同的算法
+       //场景例：年终绩效计算，不同的岗位，计算方式不同。变的因素是每个人的岗位不同，不变的是对应岗位的计算方式。
+      var performanceS=function(){}; //岗位S的绩效为salary*4
+      performanceS.prototype.calculate=function(salary){
+          return salary*4;
+      }
+      var performanceA=function(){}; //岗位A的绩效为salary*3
+      performanceA.prototype.calculate=function(salary){
+          return salary*3;
+      }
+      var perfomanceB=function(){}; //岗位B的绩效为salary*2
+      perfomanceB.prototype.calculate=function(salary){
+          return salary*2;
+      }
+
+      var Bouns=function(){ //定义一个绩效类
+          this.salary=null;  //薪资
+          this.strategy=null;  //绩效的计算算法
+      }
+      Bouns.prototype.setSalary=function(salary){ //设置薪资
+          this.salary=salary;
+      }
+      Bouns.prototype.setStrategy=function(strategy){  //设置绩效的计算方法
+          this.strategy=strategy;
+      }
+      Bouns.prototype.getBouns=function(){   //获取绩效
+          return this.strategy.calculate(this.salary);
+      }
+      //调用岗位A的绩效计算
+      var bouns=new Bouns();
+      bouns.setSalary(10000);
+      bouns.setStrategy(new performanceA());
+      bouns.getBouns(); // 绩效为： 30000
+      
+      
+      //以上方法可以改造为：
+      var strategies={
+        'S':function(salary){
+            return salary*4;
+        },
+        'A':function(salary){
+            return salary*3;
+        },
+        'B':function(salary){
+            return salary*2;
+        }
+      };
+      var bouns=function(level,salary){
+          return strategies[level](salary);
+      }
+    </script>
+</body>
+</html>
