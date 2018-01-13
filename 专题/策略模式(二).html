@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="http://www.hao123111.com" id="registerForm" method="post">
+        请输入用户名: <input type="text" name="userName" />
+        请输入手机号: <input type="text" name="mobile" />
+        请输入密码: <input type="text" name="password" />
+        <button>提交</button>
+    </form>
+    <script>
+        //本例主要做表单数据验证
+        //----------1.策略对象-------
+      var strategies={
+          isNonEmpty:function(value,errMsg){
+              if(value===''){
+                  return errMsg;
+              }
+          },
+          minLength:function(value,length,errMsg){
+              if(value.length<length){
+                  return errMsg;
+              }
+          },
+          isMoblie:function(value,errMsg){
+              if(!/(^1[3|5|8][0-9]{9}$)/.test(value)){
+                  return errMsg;
+              }
+          }
+      }
+
+      //-----2.validator类-----
+      var Validator=function(){
+          this.cache=[];
+      }
+      Validator.prototype.add=function(dom,rules){
+          var self=this;
+          for(var i=0,rule;rule=rule[i++];){
+              var strategyAry=rule.strategy.split(':'); //解析参数方法的json第一条转成数组[方法名，限制长度]
+              var errMsg=rule.errMsg;
+              (function(rule){
+                  self.cache.push(function(){
+                      var strategy=strategyAry.shift();  //提取验证方法名
+                      strategyAry.unshift(dom.value);  //提取表单输入值
+                      strategyAry.push(errMsg);         //提取验证失败返回信息
+                      return strategies[strategy].apply(dom,strategyAry);
+                  });
+              })(rule)
+          }
+      };
+      Validator.prototype.start=function(){
+          for(var i=0,validatorFunc;validatorFunc=this.cache[i++];){
+              var errMsg=validatorFunc();
+              if(errMsg){
+                  return errMsg;
+              }
+          }
+      };
+
+      //---------3.客户调用-------
+      var registerForm=document.getElementById('registerForm');
+      var validatorFunc=function(){
+          var validator=new Validator();
+          validator.add(registerForm.userName,[{
+              strategy:"isNonEmpty",
+              errMsg:"用户名不能为空"
+          },{
+              strategy:"minLength:4",
+              errMsg:"用户名长度不能小于4位"
+          }]);
+          validator.add(registerForm.password,[{
+              strategy:"minLength:6",
+              errMsg:"密码长度不能小于6位"
+          }]);
+          validator.add(registerForm.mobile,[{
+              strategy:'isMoblie',
+              errMsg:"手机号格式不正确"
+          }]);
+          var errMsg=validator.start();
+          return errMsg;
+      }
+      registerForm.onsubmit=function(){
+          var errMsg=validatorFunc();
+          if(errMsg){
+              alert(errMsg);
+              return false;
+          }
+      };
+    </script>
+</body>
+</html>
