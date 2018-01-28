@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        //代理模式:是指在C与A两个不同对象上,C要向A发起请求,因为一些原因需要借助对象B来作中间对象.
+        //保护代理: C(发起请求)---->B(直接拦截,没用的过滤掉)--->A(A什么也不知道)
+        //虚拟代理: A(先设置一些情况和场景)<-----B(符合A设置的条件则发送请求)<----C(发送请求)
+
+        //虚拟代理的场景例如:图片的懒加载.先加载一个本地图片,等远程图片加载完成再放到dom中
+        var myImage=function(){
+            var imgNode=document.createElement('img');
+            document.body.appendChild(imgNode);
+            return {
+                setSrc:function(src){
+                    imgNode.src=src;
+                }
+            }
+        };
+        var proxyImage=function(){
+            var img=new myImage();
+            img.onload=function(){
+                img.setSrc(this.src);  //this指向img
+            }
+            return{
+                setSrc:function(src){
+                    img.setSrc('./img/timg.jpg');  //优先展示静态资源
+                    img.setSrc(src); //网络请求成功后再展示网络资源
+                }
+            }
+        };
+        var proxy=new proxyImage();
+        proxy.setSrc('http://img.taopic.com/uploads/allimg/120727/201995-120HG1030762.jpg');
+    </script>
+</body>
+</html>
